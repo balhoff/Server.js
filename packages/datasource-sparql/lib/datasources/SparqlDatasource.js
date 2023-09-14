@@ -22,8 +22,11 @@ class SparqlDatasource extends Datasource {
 
     // Set endpoint URL and default graph
     options = options || {};
-    this._endpoint = this._endpointUrl = (options.endpoint || '').replace(/[\?#][^]*$/, '');
-    this._endpointUrl += '?query=';
+    this._endpoint = this._endpointUrl = (options.endpoint || '').replace(/[#][^]*$/, '');
+    if (this._endpoint.includes('?'))
+      this._endpointUrl += '&query=';
+    else
+      this._endpointUrl += '?query=';
 
     this._forceTypedLiterals = options.forceTypedLiterals;
   }
